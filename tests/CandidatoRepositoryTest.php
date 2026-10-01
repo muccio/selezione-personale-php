@@ -119,6 +119,19 @@ try {
     $newStatus2 = $repo->toggleContattato($cand1['id']);
     assert_true($newStatus2 === false, "toggleContattato reimposta stato a false");
 
+    // 12. Test data e orario colloquio
+    $candWithInterview = $repo->create([
+        'nome' => 'Serena Neri',
+        'valutazione' => 91,
+        'data_colloquio' => '2026-10-15T15:30',
+    ]);
+    assert_true($candWithInterview['data_colloquio'] === '2026-10-15T15:30', "data_colloquio salvata correttamente alla creazione");
+
+    $updatedInterview = $repo->update($candWithInterview['id'], [
+        'data_colloquio' => '2026-10-16T10:00',
+    ]);
+    assert_true($updatedInterview['data_colloquio'] === '2026-10-16T10:00', "data_colloquio aggiornata correttamente con update()");
+
     echo "\n✓ TUTTI I TEST CANDIDATOREPOSITORY SONO PASSATI CON SUCCESSO!\n";
 } finally {
     if (file_exists($testJsonFile)) {

@@ -182,6 +182,11 @@ class CandidatoRepository
             $validated['contattato'] = (bool)($data['contattato'] ?? false);
         }
 
+        if ($isCreate || array_key_exists('data_colloquio', $data)) {
+            $rawDate = trim((string)($data['data_colloquio'] ?? ''));
+            $validated['data_colloquio'] = $rawDate !== '' ? $rawDate : null;
+        }
+
         return $validated;
     }
 
@@ -203,6 +208,7 @@ class CandidatoRepository
             'zona_di_residenza' => $validated['zona_di_residenza'] ?? '',
             'valutazione' => $validated['valutazione'],
             'contattato' => (bool)($validated['contattato'] ?? false),
+            'data_colloquio' => $validated['data_colloquio'] ?? null,
             'created_at' => $now,
             'updated_at' => $now,
         ];
