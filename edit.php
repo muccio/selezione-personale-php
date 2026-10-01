@@ -35,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'numero_telefonico' => $_POST['numero_telefonico'] ?? '',
             'contatto_di_provenienza' => $_POST['contatto_di_provenienza'] ?? '',
             'zona_di_residenza' => $_POST['zona_di_residenza'] ?? '',
+            'contattato' => isset($_POST['contattato']),
         ]);
 
         $_SESSION['flash_success'] = "Dati del candidato '{$_POST['nome']}' aggiornati con successo!";
@@ -121,6 +122,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label class="form-label" for="zona_di_residenza">Zona di Residenza</label>
                 <input type="text" id="zona_di_residenza" name="zona_di_residenza" class="form-control"
                        value="<?= e($candidato['zona_di_residenza'] ?? '') ?>" placeholder="es. Milano Centro, Roma Est">
+            </div>
+
+            <div class="form-group" style="display: flex; align-items: center; gap: 10px; margin-top: 14px; margin-bottom: 22px;">
+                <input type="checkbox" id="contattato" name="contattato" value="1"
+                       <?= !empty($candidato['contattato']) ? 'checked' : '' ?>
+                       style="width: 20px; height: 20px; accent-color: #16a34a; cursor: pointer;">
+                <label for="contattato" class="form-label" style="margin-bottom: 0; cursor: pointer;">
+                    Candidato già contattato
+                </label>
             </div>
 
             <div class="form-actions-inline">
