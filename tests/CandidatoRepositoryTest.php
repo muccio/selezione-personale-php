@@ -132,6 +132,29 @@ try {
     ]);
     assert_true($updatedInterview['data_colloquio'] === '2026-10-16T10:00', "data_colloquio aggiornata correttamente con update()");
 
+    // 13. Test voto facoltativo (assegnato dopo il colloquio)
+    $candNoScore = $repo->create([
+        'nome' => 'Luca Da Valutare',
+        'data_colloquio' => '2026-10-25T11:00',
+        'valutazione' => null, // nessun voto prima del colloquio
+    ]);
+    assert_true($candNoScore['valutazione'] === null, "Candidato creato senza voto ha valutazione = null");
+
+    // Verifica che nell'ordinamento i candidati non ancora valutati vadano in fondo
+    $sortedDesc = $repo->getAll('valutazione_desc');
+    $lastItemDesc = end($sortedDesc);
+    assert_true($lastItemDesc['valutazione'] === null, "In ordinamento decrescente il candidato senza voto è in fondo");
+
+    // Assegnazione voto post-colloquio
+    $candRatedAfter = $repo->update($candNoScore['id'], [
+        'valutazione' => 97, // voto assegnato dopo colloquio
+    ]);
+    assert_true($candRatedAfter['valutazione'] === 97, "Voto assegnato con successo post-colloquio");
+
+    // Ora deve essere primo in decrescente
+    $sortedDescAfter = $repo->getAll('valutazione_desc');
+    assert_true($sortedDescAfter[0]['id'] === $candNoScore['id'], "Candidato valutato 97 post-colloquio è ora in cima alla classifica");
+
     echo "\n✓ TUTTI I TEST CANDIDATOREPOSITORY SONO PASSATI CON SUCCESSO!\n";
 } finally {
     if (file_exists($testJsonFile)) {

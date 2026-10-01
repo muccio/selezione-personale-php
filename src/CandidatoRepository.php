@@ -94,14 +94,20 @@ class CandidatoRepository
         $items = $this->readAll();
 
         usort($items, function (array $a, array $b) use ($sortBy): int {
-            $scoreA = (int)($a['valutazione'] ?? 0);
-            $scoreB = (int)($b['valutazione'] ?? 0);
+            $scoreA = isset($a['valutazione']) && $a['valutazione'] !== null ? (int)$a['valutazione'] : null;
+            $scoreB = isset($b['valutazione']) && $b['valutazione'] !== null ? (int)$b['valutazione'] : null;
 
             switch ($sortBy) {
                 case 'valutazione_asc':
+                    if ($scoreA === null && $scoreB === null) return 0;
+                    if ($scoreA === null) return 1;
+                    if ($scoreB === null) return -1;
                     return $scoreA <=> $scoreB;
 
                 case 'valutazione_desc':
+                    if ($scoreA === null && $scoreB === null) return 0;
+                    if ($scoreA === null) return 1;
+                    if ($scoreB === null) return -1;
                     return $scoreB <=> $scoreA;
 
                 case 'nome_asc':
@@ -156,14 +162,18 @@ class CandidatoRepository
 
         if ($isCreate || array_key_exists('valutazione', $data)) {
             $rawScore = $data['valutazione'] ?? null;
-            if ($rawScore === null || !is_numeric($rawScore)) {
-                throw new InvalidArgumentException("La valutazione deve essere un valore numerico tra 0 e 100.");
+            if ($rawScore === null || trim((string)$rawScore) === '') {
+                $validated['valutazione'] = null;
+            } else {
+                if (!is_numeric($rawScore)) {
+                    throw new InvalidArgumentException("La valutazione deve essere un valore numerico tra 0 e 100.");
+                }
+                $score = (int)$rawScore;
+                if ($score < 0 || $score > 100) {
+                    throw new InvalidArgumentException("La valutazione in centesimi deve essere compresa tra 0 e 100.");
+                }
+                $validated['valutazione'] = $score;
             }
-            $score = (int)$rawScore;
-            if ($score < 0 || $score > 100) {
-                throw new InvalidArgumentException("La valutazione in centesimi deve essere compresa tra 0 e 100.");
-            }
-            $validated['valutazione'] = $score;
         }
 
         if ($isCreate || array_key_exists('numero_telefonico', $data)) {
