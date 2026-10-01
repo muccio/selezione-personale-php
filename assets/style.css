@@ -38,6 +38,10 @@
   --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -54,17 +58,24 @@ body {
 }
 
 .container {
-  max-width: 1100px;
+  max-width: 1240px;
   margin: 0 auto;
 }
 
 /* Header */
 .app-header {
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.header-content {
+  flex: 1;
 }
 
 .app-title {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: 700;
   color: var(--text-main);
   display: flex;
@@ -73,9 +84,21 @@ body {
 }
 
 .app-subtitle {
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   color: var(--text-muted);
   margin-top: 4px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+}
+
+.btn-header-add {
+  width: 100%;
+  font-size: 0.95rem;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
 }
 
 /* Notifiche / Alert */
@@ -222,29 +245,53 @@ body {
 .sort-toolbar {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   background: var(--bg-card);
   padding: 14px 16px;
   border-radius: var(--radius-md);
   border: 1px solid var(--border);
-  margin-bottom: 16px;
+  margin-bottom: 18px;
+  box-shadow: var(--shadow-sm);
 }
 
 .sort-toolbar-header {
-  font-size: 0.85rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  color: var(--text-muted);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
+}
+
+.sort-count-badge {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.sort-active-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: #f1f5f9;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+
+.sort-controls-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .sort-buttons-group {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
+  flex: 1;
+}
+
+.sort-add-link {
+  display: none;
 }
 
 .sort-btn {
@@ -530,36 +577,131 @@ body {
   margin-bottom: 12px;
 }
 
+/* Form in Coda alla Pagina */
+.form-card-bottom {
+  margin-top: 32px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: 22px;
+}
+
+.card-header-with-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.back-to-top-link {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--primary);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--primary-light);
+  transition: all 0.15s ease;
+}
+
+.back-to-top-link:hover {
+  background: #dbeafe;
+}
+
+.form-card-subtitle {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+.form-grid-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.custom-checkbox {
+  width: 20px;
+  height: 20px;
+  accent-color: #16a34a;
+  cursor: pointer;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.form-submit-row {
+  margin-top: 10px;
+}
+
+.btn-submit-candidato {
+  width: 100%;
+}
+
 /* ==========================================================================
    Desktop & Tablet Media Queries (min-width: 860px)
    ========================================================================== */
+@media (min-width: 768px) {
+  .btn-header-add {
+    width: auto;
+  }
+}
+
 @media (min-width: 860px) {
   body {
-    padding: 32px 24px;
+    padding: 36px 32px;
   }
 
   .app-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 28px;
   }
 
-  .layout-grid {
-    display: grid;
-    grid-template-columns: 360px 1fr;
-    gap: 24px;
-    align-items: start;
+  .app-title {
+    font-size: 1.85rem;
   }
 
   .sort-toolbar {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    padding: 16px 20px;
+  }
+
+  .sort-controls-right {
+    flex: initial;
   }
 
   .sort-buttons-group {
     display: flex;
+    flex: initial;
   }
 
-  /* Su desktop visualizziamo la tabella invece delle cards */
+  .sort-add-link {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  /* Su desktop visualizziamo la tabella ricca invece delle cards */
   .mobile-cards-wrapper {
     display: none;
   }
@@ -570,7 +712,8 @@ body {
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-sm);
-    overflow: hidden;
+    overflow-x: auto;
+    margin-bottom: 28px;
   }
 
   .data-table {
@@ -582,13 +725,14 @@ body {
 
   .data-table th {
     background: #f8fafc;
-    padding: 14px 16px;
-    font-size: 0.85rem;
-    font-weight: 600;
+    padding: 14px 18px;
+    font-size: 0.82rem;
+    font-weight: 700;
     color: var(--text-muted);
     text-transform: uppercase;
-    letter-spacing: 0.04em;
-    border-bottom: 1px solid var(--border);
+    letter-spacing: 0.05em;
+    border-bottom: 2px solid var(--border);
+    white-space: nowrap;
   }
 
   .data-table th a {
@@ -597,29 +741,59 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 4px;
+    padding: 2px 4px;
+    border-radius: 4px;
+    transition: all 0.15s ease;
   }
 
   .data-table th a:hover {
     color: var(--primary);
+    background: rgba(37, 99, 235, 0.08);
   }
 
   .data-table td {
-    padding: 16px;
+    padding: 14px 18px;
     border-bottom: 1px solid var(--border);
     vertical-align: middle;
+  }
+
+  .data-table tbody tr:nth-child(even) td {
+    background-color: #fbfcfe;
+  }
+
+  .data-table tbody tr:hover td {
+    background-color: #f1f5f9;
   }
 
   .data-table tr:last-child td {
     border-bottom: none;
   }
 
-  .data-table tr:hover td {
-    background-color: #f1f5f9;
-  }
-
   .table-actions {
     display: flex;
     gap: 8px;
     justify-content: flex-end;
+    white-space: nowrap;
+  }
+
+  /* Form Desktop Layout a 2 Colonne con pulsante centrato */
+  .form-card-bottom {
+    padding: 32px 36px;
+    margin-top: 40px;
+    box-shadow: var(--shadow-md);
+  }
+
+  .form-grid-layout {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 28px;
+    row-gap: 16px;
+  }
+
+  .btn-submit-candidato {
+    max-width: 340px;
+    margin: 0 auto;
+    display: flex;
   }
 }
+

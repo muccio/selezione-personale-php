@@ -57,6 +57,19 @@ try {
     $htmlIndex = $httpGet('/index.php');
     assert_e2e(str_contains($htmlIndex, 'Selezione Personale'), "Titolo applicazione presente");
     assert_e2e(str_contains($htmlIndex, 'Nuovo Candidato'), "Form inserimento presente");
+    assert_e2e(str_contains($htmlIndex, 'desktop-table-wrapper'), "Tabella desktop presente nel DOM");
+    assert_e2e(str_contains($htmlIndex, 'form-card-bottom'), "Card form in coda presente nel DOM");
+    assert_e2e(str_contains($htmlIndex, 'form-grid-layout'), "Layout griglia form desktop presente");
+    assert_e2e(str_contains($htmlIndex, 'back-to-top-link'), "Pulsante 'Torna in cima' presente");
+    $posTable = strpos($htmlIndex, 'desktop-table-wrapper');
+    $posBottomForm = strpos($htmlIndex, 'id="nuovo-candidato"');
+    assert_e2e($posTable < $posBottomForm, "La graduatoria/tabella precede il form di inserimento (posizionato in coda)");
+
+    // Verifica CSS responsive
+    $css = $httpGet('/assets/style.css');
+    assert_e2e(str_contains($css, '@media (min-width: 860px)'), "Media query desktop presente nel CSS");
+    assert_e2e(str_contains($css, 'grid-template-columns: repeat(2, 1fr)'), "Griglia desktop per form presente nel CSS");
+    assert_e2e(str_contains($css, 'scroll-behavior: smooth'), "Smooth scroll abilitato nel CSS");
 
     // 2. Verifica ordinamento decrescente (default)
     $htmlDesc = $httpGet('/index.php?sort=valutazione_desc');

@@ -84,13 +84,20 @@ $totaleCandidati = count($candidati);
 <div class="container">
 
     <!-- Header Applicazione -->
-    <header class="app-header">
-        <h1 class="app-title">
-            <span>📋</span> Selezione Personale
-        </h1>
-        <p class="app-subtitle">
-            Archivio candidati e graduatoria per punteggio di valutazione
-        </p>
+    <header class="app-header" id="top">
+        <div class="header-content">
+            <h1 class="app-title">
+                <span>📋</span> Selezione Personale
+            </h1>
+            <p class="app-subtitle">
+                Archivio candidati e graduatoria per punteggio di valutazione
+            </p>
+        </div>
+        <div class="header-actions">
+            <a href="#nuovo-candidato" class="btn btn-primary btn-header-add">
+                <span>➕</span> Nuovo Candidato
+            </a>
+        </div>
     </header>
 
     <!-- Messaggi Flash di Feedback -->
@@ -106,70 +113,15 @@ $totaleCandidati = count($candidati);
         </div>
     <?php endif; ?>
 
-    <!-- Layout Grid Responsive -->
-    <div class="layout-grid">
-
-        <!-- Colonna Form Inserimento (Mobile First) -->
-        <aside class="card">
-            <h2 class="card-title">
-                <span>➕</span> Nuovo Candidato
-            </h2>
-            <form action="index.php?sort=<?= e($sortBy) ?>" method="POST" novalidate>
-                <input type="hidden" name="action" value="create">
-
-                <div class="form-group">
-                    <label class="form-label" for="nome">Nome e Cognome <span class="req">*</span></label>
-                    <input type="text" id="nome" name="nome" class="form-control" placeholder="es. Mario Rossi" required>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="valutazione">Valutazione (in centesimi 0-100)</label>
-                    <input type="number" id="valutazione" name="valutazione" class="form-control" min="0" max="100" placeholder="es. 85 (assegnato dopo il colloquio)">
-                    <div class="form-hint">Opzionale: il voto viene assegnato dopo aver svolto il colloquio</div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="numero_telefonico">Numero Telefonico</label>
-                    <input type="tel" id="numero_telefonico" name="numero_telefonico" class="form-control" placeholder="es. +39 333 1234567">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="contatto_di_provenienza">Contatto di Provenienza</label>
-                    <input type="text" id="contatto_di_provenienza" name="contatto_di_provenienza" class="form-control" placeholder="es. LinkedIn, Annuncio, Passaparola">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="zona_di_residenza">Zona di Residenza</label>
-                    <input type="text" id="zona_di_residenza" name="zona_di_residenza" class="form-control" placeholder="es. Milano Centro, Roma Est">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="data_colloquio">Data e Ora Colloquio</label>
-                    <input type="datetime-local" id="data_colloquio" name="data_colloquio" class="form-control">
-                    <div class="form-hint">Opzionale: fissa giorno e orario del colloquio</div>
-                </div>
-
-                <div class="form-group" style="display: flex; align-items: center; gap: 10px; margin-top: 10px; margin-bottom: 20px;">
-                    <input type="checkbox" id="contattato" name="contattato" value="1" style="width: 20px; height: 20px; accent-color: #16a34a; cursor: pointer;">
-                    <label for="contattato" class="form-label" style="margin-bottom: 0; cursor: pointer;">
-                        Candidato già contattato
-                    </label>
-                </div>
-
-                <button type="submit" class="btn btn-primary">
-                    Salva Candidato
-                </button>
-            </form>
-        </aside>
-
-        <!-- Colonna Elenco Candidati e Ordinamento -->
-        <main>
-            <!-- Barra di Ordinamento per Valutazione -->
-            <section class="sort-toolbar" aria-label="Ordinamento graduatoria">
-                <div class="sort-toolbar-header">
-                    <span>Graduatoria Candidati (<?= $totaleCandidati ?>)</span>
-                    <span><?= e(get_active_sort_label($sortBy)) ?></span>
-                </div>
+    <!-- Contenuto Principale: Graduatoria ed Elenco Candidati -->
+    <main class="main-content">
+        <!-- Barra di Ordinamento per Valutazione -->
+        <section class="sort-toolbar" aria-label="Ordinamento graduatoria">
+            <div class="sort-toolbar-header">
+                <span class="sort-count-badge">Graduatoria Candidati (<?= $totaleCandidati ?>)</span>
+                <span class="sort-active-label"><?= e(get_active_sort_label($sortBy)) ?></span>
+            </div>
+            <div class="sort-controls-right">
                 <div class="sort-buttons-group">
                     <a href="index.php?sort=valutazione_desc"
                        class="sort-btn <?= $sortBy === 'valutazione_desc' ? 'active' : '' ?>"
@@ -182,7 +134,11 @@ $totaleCandidati = count($candidati);
                         ⬆ Più Bassi (0 → 100)
                     </a>
                 </div>
-            </section>
+                <a href="#nuovo-candidato" class="btn btn-secondary btn-sm sort-add-link" title="Aggiungi un nuovo candidato in fondo">
+                    ➕ Aggiungi
+                </a>
+            </div>
+        </section>
 
             <?php if ($totaleCandidati === 0): ?>
                 <div class="empty-state">
@@ -390,8 +346,72 @@ $totaleCandidati = count($candidati);
 
             <?php endif; ?>
         </main>
-    </div>
 
+        <!-- Sezione Inserimento Candidato (in coda alla pagina) -->
+        <section id="nuovo-candidato" class="card form-card-bottom">
+            <div class="card-header-with-actions">
+                <h2 class="card-title">
+                    <span>➕</span> Nuovo Candidato
+                </h2>
+                <a href="#top" class="back-to-top-link" title="Torna in cima alla graduatoria">
+                    ↑ Torna in cima
+                </a>
+            </div>
+            <p class="form-card-subtitle">
+                Compila i campi per inserire un candidato. Il voto può essere lasciato vuoto e assegnato successivamente dopo il colloquio.
+            </p>
+
+            <form action="index.php?sort=<?= e($sortBy) ?>" method="POST" novalidate class="form-bottom">
+                <input type="hidden" name="action" value="create">
+
+                <div class="form-grid-layout">
+                    <div class="form-group">
+                        <label class="form-label" for="nome">Nome e Cognome <span class="req">*</span></label>
+                        <input type="text" id="nome" name="nome" class="form-control" placeholder="es. Mario Rossi" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="valutazione">Valutazione (in centesimi 0-100)</label>
+                        <input type="number" id="valutazione" name="valutazione" class="form-control" min="0" max="100" placeholder="es. 85 (lascia vuoto se prima del colloquio)">
+                        <div class="form-hint">Opzionale: il voto viene assegnato dopo aver svolto il colloquio</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="numero_telefonico">Numero Telefonico</label>
+                        <input type="tel" id="numero_telefonico" name="numero_telefonico" class="form-control" placeholder="es. +39 333 1234567">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="contatto_di_provenienza">Contatto di Provenienza</label>
+                        <input type="text" id="contatto_di_provenienza" name="contatto_di_provenienza" class="form-control" placeholder="es. LinkedIn, Annuncio, Passaparola">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="zona_di_residenza">Zona di Residenza</label>
+                        <input type="text" id="zona_di_residenza" name="zona_di_residenza" class="form-control" placeholder="es. Milano Centro, Roma Est">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="data_colloquio">Data e Ora Colloquio</label>
+                        <input type="datetime-local" id="data_colloquio" name="data_colloquio" class="form-control">
+                        <div class="form-hint">Opzionale: fissa giorno e orario del colloquio</div>
+                    </div>
+                </div>
+
+                <div class="form-group form-checkbox-group">
+                    <input type="checkbox" id="contattato" name="contattato" value="1" class="custom-checkbox">
+                    <label for="contattato" class="form-label mb-0 cursor-pointer">
+                        Candidato già contattato
+                    </label>
+                </div>
+
+                <div class="form-submit-row">
+                    <button type="submit" class="btn btn-primary btn-submit-candidato">
+                        <span>💾</span> Salva Candidato
+                    </button>
+                </div>
+            </form>
+        </section>
 </div>
 </body>
 </html>
