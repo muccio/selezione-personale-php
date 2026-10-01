@@ -52,3 +52,47 @@ function get_active_sort_label(string $sortBy): string
         default => 'Valutazione: Dal più alto al più basso',
     };
 }
+
+/**
+ * Genera un URL per chat WhatsApp diretta (wa.me)
+ */
+function whatsapp_url(?string $phone): string
+{
+    if ($phone === null || trim($phone) === '') {
+        return '';
+    }
+
+    $trimmed = trim($phone);
+    $digits = preg_replace('/[^\d]/', '', $trimmed);
+    if ($digits === '') {
+        return '';
+    }
+
+    // Se è un cellulare italiano di 10 cifre che inizia per 3, aggiungiamo il prefisso internazionale 39
+    if (strlen($digits) === 10 && str_starts_with($digits, '3')) {
+        $digits = '39' . $digits;
+    }
+
+    return 'https://wa.me/' . $digits;
+}
+
+/**
+ * Restituisce classe CSS ed etichetta per lo stato di contatto
+ * @return array{class: string, label: string, icon: string}
+ */
+function badge_contattato_info(bool $contattato): array
+{
+    if ($contattato) {
+        return [
+            'class' => 'contacted-yes',
+            'label' => 'Contattato',
+            'icon' => '✓'
+        ];
+    }
+    return [
+        'class' => 'contacted-no',
+        'label' => 'Da contattare',
+        'icon' => '⏳'
+    ];
+}
+

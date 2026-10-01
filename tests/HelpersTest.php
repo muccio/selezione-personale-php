@@ -34,4 +34,16 @@ assert_test(badge_valutazione_class(0) === 'score-low', "Punteggio 0 ha classe s
 assert_test(get_active_sort_label('valutazione_desc') === 'Valutazione: Dal più alto al più basso', "Etichetta decrescente corretta");
 assert_test(get_active_sort_label('valutazione_asc') === 'Valutazione: Dal più basso al più alto', "Etichetta crescente corretta");
 
+// 5. Link WhatsApp e Chiamata
+assert_test(whatsapp_url('+39 333 1234567') === 'https://wa.me/393331234567', "whatsapp_url crea URL corretto per numero con +39");
+assert_test(whatsapp_url('333 1234567') === 'https://wa.me/393331234567', "whatsapp_url aggiunge prefisso 39 per cellulare italiano a 10 cifre che inizia con 3");
+assert_test(whatsapp_url(null) === '', "whatsapp_url su null restituisce stringa vuota");
+
+// 6. Badge Contattato
+$badgeContattato = badge_contattato_info(true);
+assert_test($badgeContattato['class'] === 'contacted-yes' && $badgeContattato['label'] === 'Contattato', "badge_contattato_info per true restituisce label Contattato");
+
+$badgeDaContattare = badge_contattato_info(false);
+assert_test($badgeDaContattare['class'] === 'contacted-no' && $badgeDaContattare['label'] === 'Da contattare', "badge_contattato_info per false restituisce label Da contattare");
+
 echo "\n✓ TUTTI I TEST HELPERS SONO PASSATI CON SUCCESSO!\n";
