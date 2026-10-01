@@ -46,4 +46,11 @@ assert_test($badgeContattato['class'] === 'contacted-yes' && $badgeContattato['l
 $badgeDaContattare = badge_contattato_info(false);
 assert_test($badgeDaContattare['class'] === 'contacted-no' && $badgeDaContattare['label'] === 'Da contattare', "badge_contattato_info per false restituisce label Da contattare");
 
+// 7. Formattazione data e ora colloquio
+assert_test(format_datetime_colloquio('2026-10-15T15:30') === '15/10/2026 alle 15:30', "format_datetime_colloquio formatta data ISO in italiano");
+assert_test(format_datetime_colloquio('2026-10-15 09:00:00') === '15/10/2026 alle 09:00', "format_datetime_colloquio formatta data SQL in italiano");
+assert_test(format_datetime_colloquio(null) === '', "format_datetime_colloquio su null restituisce stringa vuota");
+assert_test(format_datetime_for_input('2026-10-15 15:30:00') === '2026-10-15T15:30', "format_datetime_for_input converte per input HTML datetime-local");
+assert_test(format_datetime_for_input(null) === '', "format_datetime_for_input su null restituisce stringa vuota");
+
 echo "\n✓ TUTTI I TEST HELPERS SONO PASSATI CON SUCCESSO!\n";

@@ -96,3 +96,38 @@ function badge_contattato_info(bool $contattato): array
     ];
 }
 
+/**
+ * Formatta la data e l'orario del colloquio per visualizzazione leggibile (es. 15/10/2026 alle 15:30)
+ */
+function format_datetime_colloquio(?string $dateTimeStr): string
+{
+    if ($dateTimeStr === null || trim($dateTimeStr) === '') {
+        return '';
+    }
+
+    $timestamp = strtotime($dateTimeStr);
+    if ($timestamp === false) {
+        return $dateTimeStr;
+    }
+
+    return date('d/m/Y \a\l\l\e H:i', $timestamp);
+}
+
+/**
+ * Formatta la data/ora per il valore di input type="datetime-local" (formato Y-m-d\TH:i)
+ */
+function format_datetime_for_input(?string $dateTimeStr): string
+{
+    if ($dateTimeStr === null || trim($dateTimeStr) === '') {
+        return '';
+    }
+
+    $timestamp = strtotime($dateTimeStr);
+    if ($timestamp === false) {
+        return '';
+    }
+
+    return date('Y-m-d\TH:i', $timestamp);
+}
+
+
