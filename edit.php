@@ -36,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'contatto_di_provenienza' => $_POST['contatto_di_provenienza'] ?? '',
             'zona_di_residenza' => $_POST['zona_di_residenza'] ?? '',
             'contattato' => isset($_POST['contattato']),
+            'data_colloquio' => $_POST['data_colloquio'] ?? null,
         ]);
 
         $_SESSION['flash_success'] = "Dati del candidato '{$_POST['nome']}' aggiornati con successo!";
@@ -122,6 +123,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label class="form-label" for="zona_di_residenza">Zona di Residenza</label>
                 <input type="text" id="zona_di_residenza" name="zona_di_residenza" class="form-control"
                        value="<?= e($candidato['zona_di_residenza'] ?? '') ?>" placeholder="es. Milano Centro, Roma Est">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="data_colloquio">Data e Ora Colloquio</label>
+                <input type="datetime-local" id="data_colloquio" name="data_colloquio" class="form-control"
+                       value="<?= e(format_datetime_for_input($candidato['data_colloquio'] ?? null)) ?>">
+                <div class="form-hint">Giorno e orario fissato per il colloquio (lascia vuoto se non fissato)</div>
             </div>
 
             <div class="form-group" style="display: flex; align-items: center; gap: 10px; margin-top: 14px; margin-bottom: 22px;">

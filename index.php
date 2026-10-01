@@ -33,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'contatto_di_provenienza' => $_POST['contatto_di_provenienza'] ?? '',
                 'zona_di_residenza' => $_POST['zona_di_residenza'] ?? '',
                 'contattato' => isset($_POST['contattato']),
+                'data_colloquio' => $_POST['data_colloquio'] ?? null,
             ]);
             $_SESSION['flash_success'] = "Candidato inserito con successo!";
         } catch (InvalidArgumentException $e) {
@@ -142,6 +143,12 @@ $totaleCandidati = count($candidati);
                     <input type="text" id="zona_di_residenza" name="zona_di_residenza" class="form-control" placeholder="es. Milano Centro, Roma Est">
                 </div>
 
+                <div class="form-group">
+                    <label class="form-label" for="data_colloquio">Data e Ora Colloquio</label>
+                    <input type="datetime-local" id="data_colloquio" name="data_colloquio" class="form-control">
+                    <div class="form-hint">Opzionale: fissa giorno e orario del colloquio</div>
+                </div>
+
                 <div class="form-group" style="display: flex; align-items: center; gap: 10px; margin-top: 10px; margin-bottom: 20px;">
                     <input type="checkbox" id="contattato" name="contattato" value="1" style="width: 20px; height: 20px; accent-color: #16a34a; cursor: pointer;">
                     <label for="contattato" class="form-label" style="margin-bottom: 0; cursor: pointer;">
@@ -244,6 +251,13 @@ $totaleCandidati = count($candidati);
                                         <span>Zona: <strong><?= e($c['zona_di_residenza']) ?></strong></span>
                                     </div>
                                 <?php endif; ?>
+
+                                <?php if (!empty($c['data_colloquio'])): ?>
+                                    <div class="detail-item interview-badge">
+                                        <span>📅</span>
+                                        <span>Colloquio fissato: <strong><?= e(format_datetime_colloquio($c['data_colloquio'])) ?></strong></span>
+                                    </div>
+                                <?php endif; ?>
                             </div>
 
                             <!-- Spunta Contattato + Azioni Modifica/Elimina -->
@@ -291,6 +305,7 @@ $totaleCandidati = count($candidati);
                                 </th>
                                 <th>Telefono & Chiamata</th>
                                 <th>Stato Contatto</th>
+                                <th>Colloquio</th>
                                 <th>Provenienza</th>
                                 <th>Zona</th>
                                 <th style="text-align: right;">Azioni</th>
@@ -344,6 +359,15 @@ $totaleCandidati = count($candidati);
                                                 <span><?= $isContacted ? '✓ Contattato' : 'Da contattare' ?></span>
                                             </label>
                                         </form>
+                                    </td>
+                                    <td>
+                                        <?php if (!empty($c['data_colloquio'])): ?>
+                                            <span class="interview-pill" title="Data e ora colloquio">
+                                                📅 <?= e(format_datetime_colloquio($c['data_colloquio'])) ?>
+                                            </span>
+                                        <?php else: ?>
+                                            <span style="color: var(--text-muted); font-size: 0.88rem;">Non fissato</span>
+                                        <?php endif; ?>
                                     </td>
                                     <td><?= e($c['contatto_di_provenienza'] ?? '-') ?></td>
                                     <td><?= e($c['zona_di_residenza'] ?? '-') ?></td>
