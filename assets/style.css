@@ -370,6 +370,99 @@ body {
   text-decoration: underline;
 }
 
+/* Pulsanti di Chiamata Rapida e WhatsApp */
+.phone-action-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.btn-quick-call {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background-color: #2563eb;
+  color: #ffffff !important;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  min-height: 40px;
+  transition: background-color 0.15s ease;
+}
+
+.btn-quick-call:hover {
+  background-color: #1d4ed8;
+}
+
+.btn-quick-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background-color: #16a34a;
+  color: #ffffff !important;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  min-height: 40px;
+  transition: background-color 0.15s ease;
+}
+
+.btn-quick-whatsapp:hover {
+  background-color: #15803d;
+}
+
+/* Spunta e Toggle Contattato (Mobile & Desktop) */
+.contact-toggle-form {
+  display: inline-flex;
+  align-items: center;
+}
+
+.contact-toggle-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border);
+  background: #f8fafc;
+  font-size: 0.88rem;
+  font-weight: 600;
+  user-select: none;
+  transition: all 0.15s ease;
+  min-height: 38px;
+}
+
+.contact-toggle-label:hover {
+  border-color: #94a3b8;
+}
+
+.contact-toggle-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #16a34a;
+  cursor: pointer;
+}
+
+.contact-toggle-label.is-checked {
+  background-color: #ecfdf5;
+  border-color: #86efac;
+  color: #166534;
+}
+
+.candidate-card.is-contacted {
+  border-left: 4px solid #16a34a;
+}
+
+
 /* Azioni Scheda Candidato */
 .candidate-actions {
   display: flex;
