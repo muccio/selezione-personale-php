@@ -123,9 +123,9 @@ $totaleCandidati = count($candidati);
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" for="valutazione">Valutazione (in centesimi 0-100) <span class="req">*</span></label>
-                    <input type="number" id="valutazione" name="valutazione" class="form-control" min="0" max="100" placeholder="es. 85" required>
-                    <div class="form-hint">Punteggio da 0 a 100 per l'ordinamento in graduatoria</div>
+                    <label class="form-label" for="valutazione">Valutazione (in centesimi 0-100)</label>
+                    <input type="number" id="valutazione" name="valutazione" class="form-control" min="0" max="100" placeholder="es. 85 (assegnato dopo il colloquio)">
+                    <div class="form-hint">Opzionale: il voto viene assegnato dopo aver svolto il colloquio</div>
                 </div>
 
                 <div class="form-group">
@@ -196,8 +196,7 @@ $totaleCandidati = count($candidati);
                 <div class="mobile-cards-wrapper">
                     <?php foreach ($candidati as $c): ?>
                         <?php
-                            $punteggio = (int)($c['valutazione'] ?? 0);
-                            $badgeClass = badge_valutazione_class($punteggio);
+                            $punteggio = isset($c['valutazione']) && $c['valutazione'] !== null ? (int)$c['valutazione'] : null;
                             $telUri = sanitize_phone_for_tel($c['numero_telefonico'] ?? '');
                             $waUrl = whatsapp_url($c['numero_telefonico'] ?? '');
                             $isContacted = !empty($c['contattato']);
@@ -205,9 +204,7 @@ $totaleCandidati = count($candidati);
                         <article class="candidate-card <?= $isContacted ? 'is-contacted' : '' ?>">
                             <div class="candidate-card-header">
                                 <h3 class="candidate-name"><?= e($c['nome']) ?></h3>
-                                <div class="score-badge <?= $badgeClass ?>" title="Valutazione: <?= $punteggio ?>/100">
-                                    <?= $punteggio ?><span class="score-label">/100</span>
-                                </div>
+                                <?= render_badge_valutazione($punteggio) ?>
                             </div>
 
                             <div class="candidate-details">
@@ -314,8 +311,7 @@ $totaleCandidati = count($candidati);
                         <tbody>
                             <?php foreach ($candidati as $c): ?>
                                 <?php
-                                    $punteggio = (int)($c['valutazione'] ?? 0);
-                                    $badgeClass = badge_valutazione_class($punteggio);
+                                    $punteggio = isset($c['valutazione']) && $c['valutazione'] !== null ? (int)$c['valutazione'] : null;
                                     $telUri = sanitize_phone_for_tel($c['numero_telefonico'] ?? '');
                                     $waUrl = whatsapp_url($c['numero_telefonico'] ?? '');
                                     $isContacted = !empty($c['contattato']);
@@ -325,9 +321,7 @@ $totaleCandidati = count($candidati);
                                         <strong><?= e($c['nome']) ?></strong>
                                     </td>
                                     <td>
-                                        <span class="score-badge <?= $badgeClass ?>">
-                                            <?= $punteggio ?><span class="score-label">/100</span>
-                                        </span>
+                                        <?= render_badge_valutazione($punteggio) ?>
                                     </td>
                                     <td>
                                         <?php if ($telUri !== ''): ?>

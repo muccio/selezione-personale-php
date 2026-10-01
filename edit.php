@@ -101,10 +101,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <div class="form-group">
-                <label class="form-label" for="valutazione">Valutazione (in centesimi 0-100) <span class="req">*</span></label>
+                <label class="form-label" for="valutazione">Valutazione (in centesimi 0-100)</label>
                 <input type="number" id="valutazione" name="valutazione" class="form-control"
-                       min="0" max="100" value="<?= e((string)($candidato['valutazione'] ?? '')) ?>" required>
-                <div class="form-hint">Punteggio numerico tra 0 e 100</div>
+                       min="0" max="100" value="<?= e($candidato['valutazione'] !== null ? (string)$candidato['valutazione'] : '') ?>" placeholder="es. 85 (assegnato dopo il colloquio)">
+                <div class="form-hint">Punteggio da 0 a 100 assegnato dopo il colloquio (lascia vuoto se in attesa)</div>
             </div>
 
             <div class="form-group">
