@@ -11,15 +11,17 @@ L'interfaccia è progettata con approccio **Mobile-First**: cards touch-friendly
 
 - **Campi Candidato**:
   - **Nome e Cognome** (obbligatorio)
-  - **Numero telefonico** (cliccabile per chiamata rapida su dispositivi mobili)
+  - **Numero telefonico** (cliccabile per chiamata rapida cellulare `tel:` e chat diretta **WhatsApp**)
+  - **Stato Contatto** (spunta / checkbox interattiva per segnare i candidati già contattati)
   - **Contatto di provenienza** (es. LinkedIn, candidatura spontanea, passaparola, annuncio)
   - **Zona di residenza** (es. Milano Centro, Roma Est, da remoto)
   - **Valutazione in centesimi** (punteggio da `0` a `100` con badge cromatico graduato)
 - **Ordinamento Dinamico Graduatoria**:
   - ⬇ **Decrescente** (dal punteggio più alto al più basso - visualizzazione ideale per i profili migliori)
   - ⬆ **Crescente** (dal punteggio più basso al più alto)
-- **Gestione Completa (CRUD)**:
+- **Gestione Completa (CRUD & Toggle)**:
   - Inserimento rapido nuovo candidato
+  - Spunta istantanea "Contattato" sia da card mobile che da tabella desktop
   - Modifica completa del record e aggiornamento punteggio
   - Eliminazione con richiesta di conferma
 - **Architettura Aperta alle Modifiche**:

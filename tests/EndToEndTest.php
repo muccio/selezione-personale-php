@@ -124,7 +124,19 @@ try {
     $posMarcoAfter = strpos($resEditPost, 'Marco Romano');
     assert_e2e($posMod > $posMarcoAfter, "Con valutazione 40 è ora in fondo alla classifica decrescente");
 
-    // 6. Test eliminazione del candidato di test
+    // 6. Test bottoni chiamata e WhatsApp su candidato esistente
+    assert_e2e(str_contains($resEditPost, 'tel:+393339999999'), "Pulsante chiamata rapida tel: presente");
+    assert_e2e(str_contains($resEditPost, 'https://wa.me/393339999999'), "Pulsante WhatsApp diretto presente");
+
+    // 7. Test spunta / toggle contattato via POST
+    $resToggle = $httpPost('/index.php?sort=valutazione_desc', [
+        'action' => 'toggle_contattato',
+        'id' => $topCandidate['id'],
+    ]);
+    assert_e2e(str_contains($resToggle, 'is-checked'), "Stato contattato attivo con classe is-checked");
+    assert_e2e(str_contains($resToggle, '✓ Contattato'), "Etichetta visiva ✓ Contattato presente");
+
+    // 8. Test eliminazione del candidato di test
     $resDelete = $httpPost('/index.php?sort=valutazione_desc', [
         'action' => 'delete',
         'id' => $topCandidate['id'],
