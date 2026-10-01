@@ -86,7 +86,20 @@ try {
     assert_e2e(str_contains($resPost, '100'), "Punteggio 100 presente nella graduatoria");
     assert_e2e(str_contains($resPost, '20/10/2026 alle 11:00'), "Data colloquio formattata visibile nella lista");
 
-    // Verifica che in decrescente sia al primo posto
+    // Test inserimento candidato SENZA voto (in attesa di colloquio)
+    $resPostNoScore = $httpPost('/index.php?sort=valutazione_desc', [
+        'action' => 'create',
+        'nome' => 'Candidato Senza Voto',
+        'valutazione' => '', // vuoto prima del colloquio
+        'numero_telefonico' => '+39 333 8888888',
+        'contatto_di_provenienza' => 'In attesa colloquio',
+        'zona_di_residenza' => 'Bologna',
+        'data_colloquio' => '2026-10-28T14:00',
+    ]);
+    assert_e2e(str_contains($resPostNoScore, 'Candidato Senza Voto'), "Candidato senza voto inserito e visibile");
+    assert_e2e(str_contains($resPostNoScore, 'Da valutare'), "Badge 'Da valutare' presente per candidato pre-colloquio");
+
+    // Verifica che in decrescente il candidato con 100 sia prima di Giulia
     $posTop = strpos($resPost, 'Candidato Top E2E');
     $posGiuliaAfter = strpos($resPost, 'Giulia Ferrari');
     assert_e2e($posTop < $posGiuliaAfter, "Candidato con 100/100 è al primo posto in graduatoria decrescente");
@@ -147,6 +160,18 @@ try {
         'id' => $topCandidate['id'],
     ]);
     assert_e2e(!str_contains($resDelete, 'Candidato Top E2E (Modificato)'), "Candidato eliminato non più presente nella pagina");
+
+    // Pulizia candidato senza voto
+    $allCurrent = $repo->getAll();
+    foreach ($allCurrent as $c) {
+        if ($c['nome'] === 'Candidato Senza Voto') {
+            $httpPost('/index.php?sort=valutazione_desc', [
+                'action' => 'delete',
+                'id' => $c['id'],
+            ]);
+            break;
+        }
+    }
 
     echo "\n✓ TUTTI I TEST END-TO-END SONO STATI COMPLETATI CON SUCCESSO!\n";
 
