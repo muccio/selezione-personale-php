@@ -1,32 +1,32 @@
 [
-  {
-    "id": "cand_66fb01a1e2001",
-    "nome": "Giulia Ferrari",
-    "numero_telefonico": "+39 347 1234567",
-    "contatto_di_provenienza": "LinkedIn",
-    "zona_di_residenza": "Milano (Centro)",
-    "valutazione": 92,
-    "created_at": "2026-10-01 08:30:00",
-    "updated_at": "2026-10-01 08:30:00"
-  },
-  {
-    "id": "cand_66fb01a1e2002",
-    "nome": "Marco Romano",
-    "numero_telefonico": "+39 338 9876543",
-    "contatto_di_provenienza": "Candidatura spontanea",
-    "zona_di_residenza": "Monza e Brianza",
-    "valutazione": 78,
-    "created_at": "2026-10-01 08:45:00",
-    "updated_at": "2026-10-01 08:45:00"
-  },
-  {
-    "id": "cand_66fb01a1e2003",
-    "nome": "Alessia Colombo",
-    "numero_telefonico": "+39 320 5551234",
-    "contatto_di_provenienza": "Passaparola dipendente",
-    "zona_di_residenza": "Bergamo",
-    "valutazione": 86,
-    "created_at": "2026-10-01 09:00:00",
-    "updated_at": "2026-10-01 09:00:00"
-  }
+    {
+        "id": "cand_66fb01a1e2001",
+        "nome": "Giulia Ferrari",
+        "numero_telefonico": "+39 347 1234567",
+        "contatto_di_provenienza": "LinkedIn",
+        "zona_di_residenza": "Milano (Centro)",
+        "valutazione": 92,
+        "created_at": "2026-10-01 08:30:00",
+        "updated_at": "2026-10-01 08:30:00"
+    },
+    {
+        "id": "cand_66fb01a1e2002",
+        "nome": "Marco Romano",
+        "numero_telefonico": "+39 338 9876543",
+        "contatto_di_provenienza": "Candidatura spontanea",
+        "zona_di_residenza": "Monza e Brianza",
+        "valutazione": 78,
+        "created_at": "2026-10-01 08:45:00",
+        "updated_at": "2026-10-01 08:45:00"
+    },
+    {
+        "id": "cand_66fb01a1e2003",
+        "nome": "Alessia Colombo",
+        "numero_telefonico": "+39 320 5551234",
+        "contatto_di_provenienza": "Passaparola dipendente",
+        "zona_di_residenza": "Bergamo",
+        "valutazione": 86,
+        "created_at": "2026-10-01 09:00:00",
+        "updated_at": "2026-10-01 09:00:00"
+    }
 ]
