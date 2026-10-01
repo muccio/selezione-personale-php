@@ -29,6 +29,9 @@ assert_test(badge_valutazione_class(79) === 'score-mid', "Punteggio 79 ha classe
 assert_test(badge_valutazione_class(60) === 'score-mid', "Punteggio 60 ha classe score-mid");
 assert_test(badge_valutazione_class(59) === 'score-low', "Punteggio 59 ha classe score-low");
 assert_test(badge_valutazione_class(0) === 'score-low', "Punteggio 0 ha classe score-low");
+assert_test(badge_valutazione_class(null) === 'score-pending', "Punteggio null ha classe score-pending");
+assert_test(str_contains(render_badge_valutazione(null), 'Da valutare'), "render_badge_valutazione con null mostra 'Da valutare'");
+assert_test(str_contains(render_badge_valutazione(85), '85'), "render_badge_valutazione con 85 mostra '85'");
 
 // 4. Etichette di ordinamento
 assert_test(get_active_sort_label('valutazione_desc') === 'Valutazione: Dal più alto al più basso', "Etichetta decrescente corretta");

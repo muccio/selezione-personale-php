@@ -26,10 +26,13 @@ function sanitize_phone_for_tel(?string $phone): string
 }
 
 /**
- * Restituisce la classe CSS del badge in base alla valutazione in centesimi (0-100)
+ * Restituisce la classe CSS del badge in base alla valutazione in centesimi (0-100) o pending
  */
-function badge_valutazione_class(int $score): string
+function badge_valutazione_class(?int $score): string
 {
+    if ($score === null) {
+        return 'score-pending';
+    }
     if ($score >= 80) {
         return 'score-high';
     }
@@ -37,6 +40,20 @@ function badge_valutazione_class(int $score): string
         return 'score-mid';
     }
     return 'score-low';
+}
+
+/**
+ * Renderizza il markup HTML del badge valutazione
+ */
+function render_badge_valutazione(?int $score): string
+{
+    if ($score === null) {
+        return '<span class="score-badge score-pending" title="Valutazione non ancora assegnata (post-colloquio)">⏳ Da valutare</span>';
+    }
+
+    $badgeClass = badge_valutazione_class($score);
+    return '<span class="score-badge ' . $badgeClass . '" title="Valutazione: ' . $score . '/100">'
+         . $score . '<span class="score-label">/100</span></span>';
 }
 
 /**
