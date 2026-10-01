@@ -178,6 +178,10 @@ class CandidatoRepository
             $validated['zona_di_residenza'] = trim((string)($data['zona_di_residenza'] ?? ''));
         }
 
+        if ($isCreate || array_key_exists('contattato', $data)) {
+            $validated['contattato'] = (bool)($data['contattato'] ?? false);
+        }
+
         return $validated;
     }
 
@@ -198,6 +202,7 @@ class CandidatoRepository
             'contatto_di_provenienza' => $validated['contatto_di_provenienza'] ?? '',
             'zona_di_residenza' => $validated['zona_di_residenza'] ?? '',
             'valutazione' => $validated['valutazione'],
+            'contattato' => (bool)($validated['contattato'] ?? false),
             'created_at' => $now,
             'updated_at' => $now,
         ];
@@ -255,5 +260,30 @@ class CandidatoRepository
         }
 
         return false;
+    }
+
+    /**
+     * Inverte lo stato 'contattato' del candidato (true <-> false)
+     */
+    public function toggleContattato(string $id): ?bool
+    {
+        $items = $this->readAll();
+        $newStatus = null;
+
+        foreach ($items as $idx => $item) {
+            if (($item['id'] ?? '') === $id) {
+                $current = (bool)($item['contattato'] ?? false);
+                $newStatus = !$current;
+                $items[$idx]['contattato'] = $newStatus;
+                $items[$idx]['updated_at'] = date('Y-m-d H:i:s');
+                break;
+            }
+        }
+
+        if ($newStatus !== null) {
+            $this->saveAll($items);
+        }
+
+        return $newStatus;
     }
 }

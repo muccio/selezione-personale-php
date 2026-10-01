@@ -107,6 +107,18 @@ try {
     assert_true(count($repo->getAll()) === 2, "Ora rimangono 2 candidati");
     assert_true($repo->findById($cand3['id']) === null, "Candidato 3 non è più presente");
 
+    // 11. Test stato contattato e toggle
+    $cand1Fresh = $repo->findById($cand1['id']);
+    assert_true(isset($cand1Fresh['contattato']) && $cand1Fresh['contattato'] === false, "Candidato di default ha contattato = false");
+
+    $newStatus = $repo->toggleContattato($cand1['id']);
+    assert_true($newStatus === true, "toggleContattato imposta stato a true");
+    $cand1Toggled = $repo->findById($cand1['id']);
+    assert_true($cand1Toggled['contattato'] === true, "Verificato stato true nel repository");
+
+    $newStatus2 = $repo->toggleContattato($cand1['id']);
+    assert_true($newStatus2 === false, "toggleContattato reimposta stato a false");
+
     echo "\n✓ TUTTI I TEST CANDIDATOREPOSITORY SONO PASSATI CON SUCCESSO!\n";
 } finally {
     if (file_exists($testJsonFile)) {
