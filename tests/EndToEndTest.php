@@ -80,9 +80,11 @@ try {
         'numero_telefonico' => '+39 333 9999999',
         'contatto_di_provenienza' => 'Test Automatizzato',
         'zona_di_residenza' => 'Roma',
+        'data_colloquio' => '2026-10-20T11:00',
     ]);
     assert_e2e(str_contains($resPost, 'Candidato Top E2E'), "Nuovo candidato inserito e visibile nella lista");
     assert_e2e(str_contains($resPost, '100'), "Punteggio 100 presente nella graduatoria");
+    assert_e2e(str_contains($resPost, '20/10/2026 alle 11:00'), "Data colloquio formattata visibile nella lista");
 
     // Verifica che in decrescente sia al primo posto
     $posTop = strpos($resPost, 'Candidato Top E2E');
@@ -106,8 +108,9 @@ try {
     $htmlEdit = $httpGet('/edit.php?id=' . urlencode($topCandidate['id']));
     assert_e2e(str_contains($htmlEdit, 'Modifica Candidato'), "Pagina di modifica caricata con successo");
     assert_e2e(str_contains($htmlEdit, 'Candidato Top E2E'), "Nome presente nel form di modifica");
+    assert_e2e(str_contains($htmlEdit, '2026-10-20T11:00'), "Valore data_colloquio presente nell'input di edit");
 
-    // Effettua modifica: declassa punteggio a 40
+    // Effettua modifica: declassa punteggio a 40 e sposta colloquio
     $resEditPost = $httpPost('/edit.php', [
         'id' => $topCandidate['id'],
         'sort' => 'valutazione_desc',
@@ -116,8 +119,10 @@ try {
         'numero_telefonico' => '+39 333 9999999',
         'contatto_di_provenienza' => 'Test Modificato',
         'zona_di_residenza' => 'Napoli',
+        'data_colloquio' => '2026-10-22T16:30',
     ]);
     assert_e2e(str_contains($resEditPost, 'Candidato Top E2E (Modificato)'), "Nome aggiornato visibile");
+    assert_e2e(str_contains($resEditPost, '22/10/2026 alle 16:30'), "Data colloquio aggiornata visibile dopo la modifica");
 
     // In decrescente ora deve essere in fondo (dopo Marco Romano con 78)
     $posMod = strpos($resEditPost, 'Candidato Top E2E (Modificato)');

@@ -13,6 +13,7 @@ L'interfaccia è progettata con approccio **Mobile-First**: cards touch-friendly
   - **Nome e Cognome** (obbligatorio)
   - **Numero telefonico** (cliccabile per chiamata rapida cellulare `tel:` e chat diretta **WhatsApp**)
   - **Stato Contatto** (spunta / checkbox interattiva per segnare i candidati già contattati)
+  - **Data e Ora Colloquio** (campo `datetime-local` per fissare giorno e orario con visualizzazione formattata `📅 15/10/2026 alle 15:30`)
   - **Contatto di provenienza** (es. LinkedIn, candidatura spontanea, passaparola, annuncio)
   - **Zona di residenza** (es. Milano Centro, Roma Est, da remoto)
   - **Valutazione in centesimi** (punteggio da `0` a `100` con badge cromatico graduato)
