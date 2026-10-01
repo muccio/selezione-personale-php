@@ -6,4 +6,4 @@
 | Task 4 | Vista Principale (`index.php`) con Form, Lista e Ordinamento | completed |
 | Task 5 | Vista di Modifica Candidato (`edit.php`) | completed |
 | Task 6 | Test di Integrazione End-to-End e Documentazione (`README.md`) | completed |
-| Task 7 | Creazione Repository Remoto su GitHub (`gh repo create`) | in_progress |
+| Task 7 | Creazione Repository Remoto su GitHub (`gh repo create`) | completed |
